@@ -21,4 +21,7 @@ conda env create -f environment.yml
 
 ## CGAN
 CGAN的代码主要参照[eriklindernoren/PyTorch-GAN](https://github.com/eriklindernoren/PyTorch-GAN/blob/master/implementations/cgan/cgan.py)，在MNIST数据集和CIFAR10数据集上进行测试，并用[FID](https://github.com/mseitzer/pytorch-fid)指标评价。
-
+|Datasets                              |FID
+|:------------------------------------:|------------------------------------|
+|MNIST                                 |24.176845
+|CIFAR10                               |295.323599
