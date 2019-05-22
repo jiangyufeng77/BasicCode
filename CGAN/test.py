@@ -17,7 +17,7 @@ os.makedirs('images/test/real', exist_ok=True)
 os.makedirs('images/test/fake', exist_ok=True)
 
 parse = argparse.ArgumentParser()
-parse.add_argument('--batch_size', type=int, default=1, help='size of the batches')
+parse.add_argument('--batch_size', type=int, default=64, help='size of the batches')
 parse.add_argument('--lr', type=float, default=0.0002, help='adam: learning rate')
 parse.add_argument('--channels', type=int, default=1, help='number of image channels')
 parse.add_argument('--b1', type=float, default=0.5, help='adam: decay of first order momentum of gradient')
@@ -88,7 +88,7 @@ generator.load_state_dict(torch.load(opt.model_dir))
 
 for i, (image, labels) in enumerate(dataloader):
     batch_size = image.shape[0]
-    z = Variable(FloatTensor(np.random.normal(loc=0.0, scale=1.0, size=(opt.batch_size, opt.latent_dim))))
+    z = Variable(FloatTensor(np.random.normal(loc=0.0, scale=1.0, size=(batch_size, opt.latent_dim))))
     real_image = Variable(image.type(FloatTensor))
     labels = Variable(labels.type(LongTensor))
     gen_image = generator(z, labels)
