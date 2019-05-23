@@ -25,4 +25,4 @@ CGAN的代码主要参照[eriklindernoren/PyTorch-GAN](https://github.com/erikli
 |Datasets                              |FID                                 |
 |:------------------------------------:|------------------------------------|
 |MNIST                                 |24.176845                           |
-|CIFAR10                               |295.323599                          |
+|CIFAR10                               |253.367244                          |
