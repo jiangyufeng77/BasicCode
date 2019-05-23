@@ -17,7 +17,7 @@ pip install visdom dominate
 pip install -r requirements.txt
 ```
 - 对于Conda用户，可以通过给定的environment.yml创建虚拟环境:
-conda env create -f environment.yml
+conda env create -f environment.yml 
 
 ## CGAN
 CGAN的代码主要参照[eriklindernoren/PyTorch-GAN](https://github.com/eriklindernoren/PyTorch-GAN/blob/master/implementations/cgan/cgan.py)，在MNIST数据集和CIFAR10数据集上进行测试，并用[FID](https://github.com/mseitzer/pytorch-fid)指标评价。
