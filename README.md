@@ -1,5 +1,5 @@
 # Basic Code
-这里写的是基于GAN的经典论文的代码复现，目前有CGAN。
+这里写的是基于GAN的经典论文的代码复现，目前有CGAN, DCGAN。
 
 ## Prerequisites
 - Linux or macOS
