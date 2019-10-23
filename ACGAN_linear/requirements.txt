@@ -16,7 +16,7 @@ mkl-random==1.0.2
 networkx==2.2
 numpy==1.16.2
 olefile==0.46
-Pillow==5.4.1
+Pillow==6.2.0
 pycparser==2.19
 pyOpenSSL==19.0.0
 pyparsing==2.3.1
