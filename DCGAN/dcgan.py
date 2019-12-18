@@ -12,26 +12,26 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torchvision.utils import save_image
 from torchvision import datasets
-# from tensorboardX import SummaryWriter
-from networks import Generator, Discriminator
-from logger import Logger
+from ori_networks import Generator, Discriminator
 
-parse = argparse.ArgumentParser()
-parse.add_argument('--batch_size', type=int, default=512, help='size of the batches')
-parse.add_argument('--lr', type=float, default=0.0002, help='adam: learning rate')
-parse.add_argument('--channels', type=int, default=3, help='number of image channels')
-parse.add_argument('--b1', type=float, default=0.5, help='adam: decay of first order momentum of gradient')
-parse.add_argument('--b2', type=float, default=0.999, help='adam: decay of first order momentum of gradient')
-parse.add_argument('--n_classes', type=int, default=10, help='number of classes for dataset')
-parse.add_argument('--latent_dim', type=int, default=100, help='dimensionality of the latent space')
-parse.add_argument('--img_size', type=int, default=64, help='size of each image dimension')
-parse.add_argument('--n_epoch', type=int, default=200, help='number of epochs of training')
-parse.add_argument('--n_row', type=int, default=10, help='the row of labels')
-parse.add_argument('--gpu_ids', type=int, default=0, help='enables cuda')
-parse.add_argument('--outf', type=str, default='images_LSUN', help='models are saved here')
-parse.add_argument('--dataroot', type=str, default='/home/ouc/data/work/datasets/unzip/lsun', help='path to datasets')
-parse.add_argument('--dataset', type=str, default='LSUN', help='choose the dataset, e.g. mnist, CIFAR10, imagenet, LSUN')
-opt = parse.parse_args()
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--batch_size', type=int, default=128, help='size of the batches')
+parser.add_argument('--lr', type=float, default=0.0002, help='adam: learning rate')
+parser.add_argument('--channels', type=int, default=3, help='number of image channels')
+parser.add_argument('--b1', type=float, default=0.5, help='adam: decay of first order momentum of gradient')
+parser.add_argument('--b2', type=float, default=0.999, help='adam: decay of first order momentum of gradient')
+parser.add_argument('--n_classes', type=int, default=10, help='number of classes for dataset')
+parser.add_argument('--latent_dim', type=int, default=100, help='dimensionality of the latent space')
+parser.add_argument('--img_size', type=int, default=32, help='size of each image dimension')
+parser.add_argument('--n_epoch', type=int, default=200, help='number of epochs of training')
+parser.add_argument('--n_row', type=int, default=10, help='the row of labels')
+parser.add_argument('--gpu_ids', type=int, default=0, help='enables cuda')
+parser.add_argument('--outf', type=str, default='cifar_for_channel', help='models are saved here') # xj-xi
+parser.add_argument('--dataroot', type=str, default='/home/jiang/文档/datasets/cifar10', help='path to datasets')
+parser.add_argument('--dataset', type=str, default='CIFAR10', help='choose the dataset, e.g. mnist, CIFAR10, imagenet, LSUN')
+parser.add_argument('--knn_size', type=int, default=8)
+opt = parser.parse_args()
 print(opt)
 
 img_shape = (opt.channels, opt.img_size, opt.img_size)
@@ -41,13 +41,16 @@ cuda = True if torch.cuda.is_available() else False
 def save_dir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
+def save_txt(txt):
+    if not os.path.exists(txt):
+        os.mknod(txt)
 
 save_path = os.path.join(opt.outf, 'checkpoints')
 model_path = os.path.join(opt.outf, 'model')
-# log_dir = os.path.join(opt.outf, 'log')
+
 save_dir(save_path)
 save_dir(model_path)
-# save_dir(log_dir)
+
 
 if opt.dataset =='mnist':
     train_loader = DataLoader(datasets.MNIST(opt.dataroot, train=True,
@@ -87,6 +90,7 @@ elif opt.dataset == 'LSUN':
 adversarial_loss = nn.BCELoss()
 
 generator = Generator(opt.latent_dim, opt.channels)
+# generator = Generator(opt.latent_dim, opt.channels, opt.knn_size)
 discriminator = Discriminator(opt.channels)
 
 if cuda:
